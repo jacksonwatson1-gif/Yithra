@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#050506">
+  <meta name="description" content="Yithra — AI-powered financial coach that works for everyone. One move at a time.">
+  <meta property="og:title" content="Yithra — Your Money. One Move at a Time.">
+  <meta property="og:description" content="The AI financial coach that adapts to your life. Track spending by just talking. Get one personalized money move every day.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <title>Yithra — Your Money. One Move at a Time.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #050506;
+      --bg-elevated: #0C0C0F;
+      --surface: #131318;
+      --surface-hover: #1A1A21;
+      --border: #222230;
+      --text: #F0F0F5;
+      --text-dim: #9494A8;
+      --text-muted: #5C5C72;
+      --green: #2DD4A0;
+      --green-dim: rgba(45, 212, 160, 0.12);
+      --green-glow: rgba(45, 212, 160, 0.25);
+      --coral: #FF6B6B;
+      --blue: #6B9FFF;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ============================================
+       NOISE OVERLAY
+       ============================================ */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* ============================================
+       GLOW ORB
+       ============================================ */
+    .glow-orb {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.15;
+      pointer-events: none;
+    }
+
+    .glow-1 {
+      top: -200px;
+      right: -100px;
+      background: var(--green);
+      animation: drift 20s ease-in-out infinite;
+    }
+
+    .glow-2 {
+      bottom: 200px;
+      left: -200px;
+      background: var(--blue);
+      opacity: 0.08;
+      animation: drift 25s ease-in-out infinite reverse;
+    }
+
+    @keyframes drift {
+      0%, 100% { transform: translate(0, 0); }
+      33% { transform: translate(30px, -20px); }
+      66% { transform: translate(-20px, 30px); }
+    }
+
+    /* ============================================
+       LAYOUT
+       ============================================ */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    section {
+      position: relative;
+    }
+
+    /* ============================================
+       HEADER
+       ============================================ */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      padding: 16px 0;
+      background: rgba(5, 5, 6, 0.8);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s;
+    }
+
+    header.scrolled {
+      border-bottom-color: var(--border);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.8px;
+      color: var(--green);
+    }
+
+    .header-cta {
+      padding: 10px 24px;
+      background: var(--green);
+      color: var(--bg);
+      border: none;
+      border-radius: 100px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.3s;
+      text-decoration: none;
+    }
+
+    .header-cta:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 20px var(--green-glow);
+    }
+
+    /* ============================================
+       HERO
+       ============================================ */
+    .hero {
+      padding: 160px 0 100px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px 6px 8px;
+      background: var(--green-dim);
+      border: 1px solid rgba(45, 212, 160, 0.15);
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--green);
+      margin-bottom: 32px;
+      animation: fadeUp 0.8s ease both;
+    }
+
+    .hero-badge-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .hero h1 {
+      font-size: clamp(40px, 7vw, 72px);
+      font-weight: 800;
+      letter-spacing: -2.5px;
+      line-height: 1.05;
+      margin-bottom: 24px;
+      animation: fadeUp 0.8s ease 0.1s both;
+    }
+
+    .hero h1 .accent {
+      background: linear-gradient(135deg, var(--green) 0%, #6BFFD4 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: clamp(17px, 2.2vw, 20px);
+      color: var(--text-dim);
+      max-width: 560px;
+      margin: 0 auto 48px;
+      line-height: 1.6;
+      font-weight: 300;
+      animation: fadeUp 0.8s ease 0.2s both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ============================================
+       WAITLIST FORM
+       ============================================ */
+    .waitlist-form {
+      display: flex;
+      gap: 10px;
+      max-width: 440px;
+      margin: 0 auto;
+      animation: fadeUp 0.8s ease 0.3s both;
+    }
+
+    .waitlist-input {
+      flex: 1;
+      padding: 16px 20px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      color: var(--text);
+      font-family: 'Outfit', sans-serif;
+      font-size: 16px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .waitlist-input:focus {
+      border-color: var(--green);
+    }
+
+    .waitlist-input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .waitlist-btn {
+      padding: 16px 28px;
+      background: var(--green);
+      color: var(--bg);
+      border: none;
+      border-radius: 14px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: transform 0.15s, box-shadow 0.3s;
+    }
+
+    .waitlist-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 30px var(--green-glow);
+    }
+
+    .waitlist-btn:active {
+      transform: scale(0.97);
+    }
+
+    .waitlist-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .form-msg {
+      text-align: center;
+      margin-top: 14px;
+      font-size: 14px;
+      min-height: 20px;
+      animation: fadeUp 0.3s ease;
+    }
+
+    .form-msg.success { color: var(--green); }
+    .form-msg.error { color: var(--coral); }
+
+    .waitlist-count {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 13px;
+      color: var(--text-muted);
+      animation: fadeUp 0.8s ease 0.4s both;
+    }
+
+    .waitlist-count strong {
+      color: var(--text-dim);
+    }
+
+    /* ============================================
+       PHONE MOCKUP
+       ============================================ */
+    .phone-section {
+      padding: 40px 0 80px;
+      display: flex;
+      justify-content: center;
+      animation: fadeUp 0.8s ease 0.5s both;
+    }
+
+    .phone-frame {
+      width: 280px;
+      height: 560px;
+      background: var(--surface);
+      border-radius: 36px;
+      border: 2px solid var(--border);
+      padding: 12px;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.5), 0 0 60px var(--green-dim);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .phone-notch {
+      width: 100px;
+      height: 24px;
+      background: var(--bg);
+      border-radius: 0 0 16px 16px;
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+    }
+
+    .phone-screen {
+      width: 100%;
+      height: 100%;
+      background: var(--bg);
+      border-radius: 26px;
+      overflow: hidden;
+      padding: 40px 16px 16px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .mock-greeting {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 3px;
+    }
+
+    .mock-date {
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+
+    .mock-move-card {
+      background: var(--green-dim);
+      border: 1px solid rgba(45, 212, 160, 0.2);
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 14px;
+    }
+
+    .mock-move-label {
+      font-size: 8px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--green);
+      margin-bottom: 6px;
+    }
+
+    .mock-move-text {
+      font-size: 11px;
+      line-height: 1.5;
+      color: var(--text);
+    }
+
+    .mock-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .mock-stat {
+      background: var(--surface);
+      border-radius: 10px;
+      padding: 10px;
+    }
+
+    .mock-stat-label {
+      font-size: 9px;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .mock-stat-val {
+      font-size: 16px;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .mock-stat-val.red { color: var(--coral); }
+    .mock-stat-val.grn { color: var(--green); }
+
+    .mock-cat {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px;
+      background: var(--surface);
+      border-radius: 8px;
+      margin-bottom: 6px;
+    }
+
+    .mock-cat-icon { font-size: 14px; }
+    .mock-cat-name { font-size: 10px; flex: 1; }
+    .mock-cat-amt { font-size: 10px; color: var(--text-dim); font-variant-numeric: tabular-nums; }
+
+    .mock-cat-bar {
+      height: 3px;
+      background: var(--border);
+      border-radius: 2px;
+      flex: 1;
+      overflow: hidden;
+      margin: 0 8px;
+    }
+
+    .mock-cat-bar-fill {
+      height: 100%;
+      border-radius: 2px;
+    }
+
+    /* ============================================
+       FEATURES
+       ============================================ */
+    .features {
+      padding: 80px 0;
+    }
+
+    .features-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .features-header h2 {
+      font-size: clamp(28px, 4vw, 40px);
+      font-weight: 700;
+      letter-spacing: -1px;
+      margin-bottom: 12px;
+    }
+
+    .features-header p {
+      color: var(--text-dim);
+      font-size: 17px;
+      font-weight: 300;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 16px;
+    }
+
+    .feature-card {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+
+    .feature-card:hover {
+      border-color: rgba(45, 212, 160, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: var(--green-dim);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      margin-bottom: 20px;
+    }
+
+    .feature-card h3 {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .feature-card p {
+      font-size: 14px;
+      line-height: 1.65;
+      color: var(--text-dim);
+      font-weight: 300;
+    }
+
+    /* ============================================
+       HOW IT WORKS
+       ============================================ */
+    .how {
+      padding: 80px 0;
+    }
+
+    .how-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .how-header h2 {
+      font-size: clamp(28px, 4vw, 40px);
+      font-weight: 700;
+      letter-spacing: -1px;
+      margin-bottom: 12px;
+    }
+
+    .how-steps {
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .how-step {
+      flex: 1;
+      min-width: 240px;
+      max-width: 320px;
+      text-align: center;
+    }
+
+    .how-num {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 2px solid var(--green);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--green);
+      margin-bottom: 16px;
+    }
+
+    .how-step h4 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .how-step p {
+      font-size: 14px;
+      color: var(--text-dim);
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    /* ============================================
+       LIFE STAGES
+       ============================================ */
+    .stages {
+      padding: 80px 0;
+    }
+
+    .stages-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .stages-header h2 {
+      font-size: clamp(28px, 4vw, 40px);
+      font-weight: 700;
+      letter-spacing: -1px;
+      margin-bottom: 12px;
+    }
+
+    .stages-header p {
+      color: var(--text-dim);
+      font-size: 17px;
+      font-weight: 300;
+    }
+
+    .stage-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      padding: 20px;
+      border-radius: 16px;
+      margin-bottom: 8px;
+      transition: background 0.2s;
+    }
+
+    .stage-row:hover {
+      background: var(--bg-elevated);
+    }
+
+    .stage-age {
+      min-width: 80px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--green);
+      padding-top: 2px;
+    }
+
+    .stage-emoji {
+      font-size: 24px;
+      width: 36px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .stage-text {
+      flex: 1;
+    }
+
+    .stage-quote {
+      font-family: 'Newsreader', serif;
+      font-style: italic;
+      font-size: 15px;
+      color: var(--text);
+      margin-bottom: 4px;
+      line-height: 1.5;
+    }
+
+    .stage-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* ============================================
+       CTA
+       ============================================ */
+    .cta {
+      padding: 100px 0;
+      text-align: center;
+    }
+
+    .cta h2 {
+      font-size: clamp(28px, 5vw, 48px);
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      margin-bottom: 16px;
+    }
+
+    .cta p {
+      color: var(--text-dim);
+      font-size: 17px;
+      font-weight: 300;
+      margin-bottom: 36px;
+    }
+
+    /* ============================================
+       FOOTER
+       ============================================ */
+    footer {
+      padding: 32px 0;
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .footer-text {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* ============================================
+       RESPONSIVE
+       ============================================ */
+    @media (max-width: 600px) {
+      .waitlist-form {
+        flex-direction: column;
+      }
+
+      .waitlist-btn {
+        width: 100%;
+      }
+
+      .how-steps {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .stage-row {
+        flex-direction: column;
+        gap: 8px;
+        padding: 16px;
+      }
+
+      .stage-age { min-width: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header id="header">
+    <div class="container header-inner">
+      <div class="logo">Yithra</div>
+      <a href="#waitlist" class="header-cta">Join Waitlist</a>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="glow-orb glow-1"></div>
+    <div class="glow-orb glow-2"></div>
+    <div class="container">
+      <div class="hero-badge">
+        <span class="hero-badge-dot"></span>
+        Launching soon
+      </div>
+      <h1>Your money.<br><span class="accent">One move at a time.</span></h1>
+      <p class="hero-sub">
+        The AI financial coach that adapts to your life stage.
+        Track spending by just talking. Get one personalized money move every day.
+      </p>
+
+      <div id="waitlist">
+        <form class="waitlist-form" id="waitlistForm">
+          <input
+            class="waitlist-input"
+            type="email"
+            placeholder="Enter your email"
+            required
+            autocomplete="email"
+            id="emailInput"
+          >
+          <button class="waitlist-btn" type="submit" id="submitBtn">
+            Get Early Access
+          </button>
+        </form>
+        <div class="form-msg" id="formMsg"></div>
+        <div class="waitlist-count" id="waitlistCount"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PHONE MOCKUP -->
+  <section class="phone-section">
+    <div class="phone-frame">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <div class="mock-greeting">Good morning</div>
+        <div class="mock-date">Sunday, March 15</div>
+        <div class="mock-move-card">
+          <div class="mock-move-label">✨ Today's Money Move</div>
+          <div class="mock-move-text">You spent $47 on coffee this week. Brewing at home 3x would save you $1,560/year toward your emergency fund.</div>
+        </div>
+        <div class="mock-stats">
+          <div class="mock-stat">
+            <div class="mock-stat-label">Spent</div>
+            <div class="mock-stat-val red">$342.50</div>
+          </div>
+          <div class="mock-stat">
+            <div class="mock-stat-label">Income</div>
+            <div class="mock-stat-val grn">$2,500</div>
+          </div>
+        </div>
+        <div class="mock-cat">
+          <span class="mock-cat-icon">🍔</span>
+          <span class="mock-cat-name">Food</span>
+          <div class="mock-cat-bar"><div class="mock-cat-bar-fill" style="width:80%;background:var(--coral)"></div></div>
+          <span class="mock-cat-amt">$128</span>
+        </div>
+        <div class="mock-cat">
+          <span class="mock-cat-icon">🚗</span>
+          <span class="mock-cat-name">Transport</span>
+          <div class="mock-cat-bar"><div class="mock-cat-bar-fill" style="width:55%;background:var(--blue)"></div></div>
+          <span class="mock-cat-amt">$89</span>
+        </div>
+        <div class="mock-cat">
+          <span class="mock-cat-icon">🛍️</span>
+          <span class="mock-cat-name">Shopping</span>
+          <div class="mock-cat-bar"><div class="mock-cat-bar-fill" style="width:40%;background:#A78BFA"></div></div>
+          <span class="mock-cat-amt">$65</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features">
+    <div class="container">
+      <div class="features-header">
+        <h2>Built different.</h2>
+        <p>Not another spreadsheet. A coach that actually knows you.</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">💬</div>
+          <h3>Talk, don't type</h3>
+          <p>Say "spent 40 at Target" and it's logged. No forms, no categories to pick, no photos to take. Just text like you're messaging a friend.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🎯</div>
+          <h3>One move per day</h3>
+          <p>Every morning, get one personalized, actionable financial tip based on your actual spending. Not generic advice — your data, your situation.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔄</div>
+          <h3>Adapts to your life</h3>
+          <p>Whether you're 16 saving for a car or 55 planning retirement, the AI calibrates to your age, income, goals, and stress points.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📊</div>
+          <h3>Weekly report card</h3>
+          <p>A visual breakdown of where your money went, how it compares to last week, and what to adjust. Shareable with a single tap.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔒</div>
+          <h3>Private by default</h3>
+          <p>No bank connections required. Your data is encrypted, row-level secured, and never sold. We don't need your bank login to help you.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <h3>30 seconds a day</h3>
+          <p>Open. See your move. Log what you spent. Close. That's it. Built for people who are too busy to budget but can't afford not to.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how">
+    <div class="container">
+      <div class="how-header">
+        <h2>Three steps. No friction.</h2>
+      </div>
+      <div class="how-steps">
+        <div class="how-step">
+          <div class="how-num">1</div>
+          <h4>Tell us about you</h4>
+          <p>Five quick questions about your age, income, goals, and what stresses you about money. Takes 30 seconds.</p>
+        </div>
+        <div class="how-step">
+          <div class="how-num">2</div>
+          <h4>Talk to Yithra</h4>
+          <p>Text your spending naturally. "Coffee $5." "Rent 1200." "Groceries like 60 bucks." We parse it instantly.</p>
+        </div>
+        <div class="how-step">
+          <div class="how-num">3</div>
+          <h4>Get your daily move</h4>
+          <p>Every morning, one push notification. One action. One step closer to your financial goal. Compound it over months.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LIFE STAGES -->
+  <section class="stages">
+    <div class="container">
+      <div class="stages-header">
+        <h2>Every age. Every income. Every goal.</h2>
+        <p>Yithra meets you where you are.</p>
+      </div>
+
+      <div class="stage-row">
+        <span class="stage-age">Ages 15–18</span>
+        <span class="stage-emoji">🎓</span>
+        <div class="stage-text">
+          <div class="stage-quote">"You spent $14 on Uber Eats this week. Packing lunch 3x saves $1,144/year toward that car."</div>
+          <div class="stage-desc">Building financial habits before they even start working full-time.</div>
+        </div>
+      </div>
+
+      <div class="stage-row">
+        <span class="stage-age">Ages 19–24</span>
+        <span class="stage-emoji">🚀</span>
+        <div class="stage-text">
+          <div class="stage-quote">"Your subscriptions total $67/month. Here's one you haven't used in 30 days — cut it."</div>
+          <div class="stage-desc">Student loans, first budget, building credit from scratch.</div>
+        </div>
+      </div>
+
+      <div class="stage-row">
+        <span class="stage-age">Ages 25–34</span>
+        <span class="stage-emoji">💼</span>
+        <div class="stage-text">
+          <div class="stage-quote">"Your grocery spending is 18% above target. Three swaps save ~$40/week."</div>
+          <div class="stage-desc">Career acceleration, saving for a home, fighting lifestyle creep.</div>
+        </div>
+      </div>
+
+      <div class="stage-row">
+        <span class="stage-age">Ages 35–44</span>
+        <span class="stage-emoji">🏡</span>
+        <div class="stage-text">
+          <div class="stage-quote">"You're on track for $12K in 529 contributions this year. Increasing $100/mo closes 40% of the gap."</div>
+          <div class="stage-desc">Mortgage, childcare, dual-income budgeting, financial anxiety.</div>
+        </div>
+      </div>
+
+      <div class="stage-row">
+        <span class="stage-age">Ages 45–54</span>
+        <span class="stage-emoji">📈</span>
+        <div class="stage-text">
+          <div class="stage-quote">"Your dining spend doubled this month. Redirecting $200/mo adds $48K to retirement by 65."</div>
+          <div class="stage-desc">Peak earning years. The decisions here compound for decades.</div>
+        </div>
+      </div>
+
+      <div class="stage-row">
+        <span class="stage-age">Ages 55+</span>
+        <span class="stage-emoji">🌅</span>
+        <div class="stage-text">
+          <div class="stage-quote">"At your current savings rate, you'll have $___K at 65. Here's how to close the gap."</div>
+          <div class="stage-desc">Retirement readiness. Healthcare costs. Making every dollar count.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOTTOM CTA -->
+  <section class="cta">
+    <div class="container">
+      <h2>Stop guessing.<br>Start <span style="color: var(--green)">knowing</span>.</h2>
+      <p>Join the waitlist and be first to get Yithra when it launches.</p>
+      <form class="waitlist-form" id="waitlistForm2">
+        <input class="waitlist-input" type="email" placeholder="Enter your email" required autocomplete="email" id="emailInput2">
+        <button class="waitlist-btn" type="submit" id="submitBtn2">Join Waitlist</button>
+      </form>
+      <div class="form-msg" id="formMsg2"></div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <p class="footer-text">© 2026 Yithra. All rights reserved. &nbsp;·&nbsp; <a href="/privacy.html" style="color: var(--text-muted); text-decoration: underline;">Privacy Policy</a> &nbsp;·&nbsp; <a href="/terms.html" style="color: var(--text-muted); text-decoration: underline;">Terms of Service</a></p>
+    </div>
+  </footer>
+
+  <script>
+    // ============================================
+    // SUPABASE WAITLIST
+    // ============================================
+    const SUPABASE_URL = 'https://vgexbtqtdilyzydstbur.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZnZXhidHF0ZGlseXp5ZHN0YnVyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM2Mjk4MjAsImV4cCI6MjA4OTIwNTgyMH0.a5xbi-wRRn8uChA0jLjFZqqKEa1axwdXbsNs5GjXJwU';
+
+    async function submitEmail(email, msgEl, btnEl) {
+      btnEl.disabled = true;
+      btnEl.textContent = 'Joining...';
+
+      try {
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/waitlist`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': SUPABASE_KEY,
+            'Authorization': `Bearer ${SUPABASE_KEY}`,
+            'Prefer': 'return=minimal'
+          },
+          body: JSON.stringify({
+            email: email,
+            referral_source: document.referrer || 'direct'
+          })
+        });
+
+        if (res.ok) {
+          msgEl.className = 'form-msg success';
+          msgEl.textContent = "You're in! We'll email you when Yithra launches.";
+          btnEl.textContent = 'Joined ✓';
+          loadCount();
+        } else if (res.status === 409) {
+          msgEl.className = 'form-msg success';
+          msgEl.textContent = "You're already on the list! We'll be in touch soon.";
+          btnEl.textContent = 'Already Joined';
+        } else {
+          throw new Error(`${res.status}`);
+        }
+      } catch (err) {
+        msgEl.className = 'form-msg error';
+        msgEl.textContent = 'Something went wrong. Please try again.';
+        btnEl.disabled = false;
+        btnEl.textContent = 'Get Early Access';
+      }
+    }
+
+    // Form 1 (hero)
+    document.getElementById('waitlistForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      submitEmail(
+        document.getElementById('emailInput').value,
+        document.getElementById('formMsg'),
+        document.getElementById('submitBtn')
+      );
+    });
+
+    // Form 2 (bottom CTA)
+    document.getElementById('waitlistForm2').addEventListener('submit', (e) => {
+      e.preventDefault();
+      submitEmail(
+        document.getElementById('emailInput2').value,
+        document.getElementById('formMsg2'),
+        document.getElementById('submitBtn2')
+      );
+    });
+
+    // Load waitlist count
+    async function loadCount() {
+      try {
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/waitlist?select=id`, {
+          headers: {
+            'apikey': SUPABASE_KEY,
+            'Authorization': `Bearer ${SUPABASE_KEY}`,
+            'Prefer': 'count=exact',
+            'Range': '0-0'
+          }
+        });
+        const range = res.headers.get('content-range');
+        if (range) {
+          const total = parseInt(range.split('/')[1]);
+          if (total > 0) {
+            document.getElementById('waitlistCount').innerHTML =
+              `<strong>${total.toLocaleString()}</strong> people on the waitlist`;
+          }
+        }
+      } catch (e) {}
+    }
+
+    loadCount();
+
+    // Header scroll effect
+    window.addEventListener('scroll', () => {
+      document.getElementById('header').classList.toggle('scrolled', window.scrollY > 20);
+    });
+  </script>
+</body>
+</html>

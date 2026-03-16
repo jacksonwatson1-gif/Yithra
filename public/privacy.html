@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yithra — Privacy Policy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: #050506;
+      color: #F0F0F5;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 60px 24px 80px;
+    }
+    a { color: #2DD4A0; }
+    h1 { font-size: 28px; font-weight: 700; color: #2DD4A0; margin-bottom: 8px; letter-spacing: -0.5px; }
+    .subtitle { font-size: 15px; color: #9494A8; margin-bottom: 40px; }
+    h2 { font-size: 20px; font-weight: 600; margin-top: 36px; margin-bottom: 12px; color: #F0F0F5; }
+    h3 { font-size: 17px; font-weight: 600; margin-top: 24px; margin-bottom: 8px; color: #CCCCDD; }
+    p { margin-bottom: 14px; font-size: 15px; color: #B8B8CC; font-weight: 300; }
+    ul { margin: 0 0 16px 20px; }
+    li { margin-bottom: 8px; font-size: 15px; color: #B8B8CC; font-weight: 300; }
+    li strong { color: #F0F0F5; font-weight: 500; }
+    hr { border: none; border-top: 1px solid #222230; margin: 32px 0; }
+    .back { display: inline-block; margin-bottom: 24px; font-size: 14px; color: #2DD4A0; text-decoration: none; }
+    .back:hover { text-decoration: underline; }
+    .footer { text-align: center; font-size: 13px; color: #5C5C72; margin-top: 40px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back">&larr; Back to Yithra</a>
+    <h1>Privacy Policy</h1>
+    <p class="subtitle">Effective Date: March 16, 2026</p>
+
+    <p>This Privacy Policy describes how Yithra ("we," "us," or "our") collects, uses, and protects information when you use the Yithra application and related services (collectively, the "Service"). By using the Service, you agree to the collection and use of information as described in this policy.</p>
+
+    <h2>1. Information We Collect</h2>
+
+    <h3>1.1 Information You Provide</h3>
+    <ul>
+      <li><strong>Account information:</strong> Email address and password when you create an account.</li>
+      <li><strong>Profile information:</strong> Age range, income range, financial goals, financial stressors, and number of dependents. This information is provided voluntarily during onboarding and is used solely to personalize your experience.</li>
+      <li><strong>Financial transaction data:</strong> Spending amounts, merchant names, categories, and descriptions that you manually enter through the conversational interface or upload via bank statements.</li>
+      <li><strong>Chat messages:</strong> Text messages you send to the Yithra chat interface for the purpose of logging transactions.</li>
+      <li><strong>Waitlist information:</strong> Email address submitted through our landing page.</li>
+    </ul>
+
+    <h3>1.2 Information Collected Automatically</h3>
+    <ul>
+      <li><strong>Push notification tokens:</strong> If you enable push notifications, we store your device's push subscription endpoint to deliver Daily Money Move notifications.</li>
+      <li><strong>Usage data:</strong> We may collect anonymized, aggregated usage data such as feature usage frequency and session duration. This data is not linked to your identity.</li>
+    </ul>
+
+    <h3>1.3 Information We Do NOT Collect</h3>
+    <ul>
+      <li>We do not connect to your bank accounts or financial institutions.</li>
+      <li>We do not collect Social Security numbers, bank account numbers, credit card numbers, or government-issued identification numbers.</li>
+      <li>We do not collect precise geolocation data.</li>
+      <li>We do not use cookies for advertising or third-party tracking.</li>
+    </ul>
+
+    <h2>2. How We Use Your Information</h2>
+    <ul>
+      <li>To provide, maintain, and improve the Service, including personalized financial coaching and the Daily Money Move feature.</li>
+      <li>To process and categorize your manually entered transactions using artificial intelligence.</li>
+      <li>To generate personalized financial insights, weekly reports, and spending analysis.</li>
+      <li>To send you push notifications (if you opt in) with your Daily Money Move.</li>
+      <li>To communicate with you about the Service, including product updates and launch notifications.</li>
+      <li>To detect, prevent, and address technical issues or security threats.</li>
+    </ul>
+
+    <h2>3. How We Process Your Data</h2>
+    <p>Yithra uses Anthropic's Claude AI to process your chat messages and generate personalized financial insights. When you send a message through the Yithra chat interface, your message is transmitted to Anthropic's API through a secure server-side connection. Anthropic processes your message solely to generate a response and does not retain your data for training purposes.</p>
+    <p>Your financial data is never used to train AI models. It is processed in real-time to generate responses and is not stored by Anthropic.</p>
+
+    <h2>4. Data Storage and Security</h2>
+    <ul>
+      <li><strong>Encryption at rest:</strong> All data is encrypted using AES-256 encryption.</li>
+      <li><strong>Encryption in transit:</strong> All data transmission uses TLS/HTTPS encryption.</li>
+      <li><strong>Row Level Security (RLS):</strong> Database-level access controls ensure that each user can only access their own data.</li>
+      <li><strong>Authentication:</strong> All API endpoints require valid authentication tokens. Server-side functions verify authentication before processing any request.</li>
+    </ul>
+
+    <h2>5. Data Sharing</h2>
+    <p>We do not sell, rent, or trade your personal information to third parties. We may share your information only in the following limited circumstances:</p>
+    <ul>
+      <li><strong>Service providers:</strong> We use Supabase (database hosting), Anthropic (AI processing), and Vercel (application hosting) as infrastructure providers. These providers process data solely on our behalf.</li>
+      <li><strong>Legal requirements:</strong> We may disclose your information if required by law, subpoena, court order, or other legal process.</li>
+    </ul>
+
+    <h2>6. Data Retention</h2>
+    <p>We retain your account data and transaction history for as long as your account is active. You may request deletion of your account and all associated data at any time by contacting us. Upon receiving a verified deletion request, we will delete your data within thirty (30) days, except where retention is required by law.</p>
+
+    <h2>7. Your Rights</h2>
+    <ul>
+      <li><strong>Access:</strong> Request a copy of the personal information we hold about you.</li>
+      <li><strong>Correction:</strong> Request correction of inaccurate or incomplete personal information.</li>
+      <li><strong>Deletion:</strong> Request deletion of your personal information.</li>
+      <li><strong>Portability:</strong> Request a machine-readable copy of your data.</li>
+      <li><strong>Opt-out:</strong> Disable push notifications at any time through the app's Settings screen.</li>
+    </ul>
+
+    <h2>8. Children's Privacy</h2>
+    <p>Yithra is intended for users aged fifteen (15) and older. We do not knowingly collect personal information from children under the age of thirteen (13). Users between the ages of thirteen (13) and seventeen (17) should use the Service with parental or guardian awareness.</p>
+
+    <h2>9. Changes to This Privacy Policy</h2>
+    <p>We may update this Privacy Policy from time to time. If we make material changes, we will notify you by email or by posting a prominent notice on the Service.</p>
+
+    <h2>10. Contact Us</h2>
+    <p>If you have any questions about this Privacy Policy, please contact us at: <strong>jacksonwatson1@gmail.com</strong></p>
+
+    <hr>
+    <div class="footer">Yithra &mdash; March 16, 2026</div>
+  </div>
+</body>
+</html>
